@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="two_dof_arm">
+
+  <!-- Constants -->
+  <xacro:property name="PI" value="3.1415"/>
+  <xacro:property name="link1_length" value="0.5"/>
+  <xacro:property name="link2_length" value="0.5"/>
+
+  <!-- Base Link -->
+  <link name="base_link"/>
+
+  <!-- Link 1 -->
+  <link name="link1">
+    <visual>
+      <origin xyz="0 0 ${link1_length / 2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${link1_length}" radius="0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joint 1 -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${-PI/2}" upper="${PI/2}" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- Link 2 -->
+  <link name="link2">
+    <visual>
+      <origin xyz="0 0 ${link2_length / 2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${link2_length}" radius="0.04"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joint 2 -->
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0 0 ${link1_length}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${-PI/2}" upper="${PI/2}" effort="10" velocity="1"/>
+  </joint>
+
+</robot>
